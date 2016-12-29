@@ -512,7 +512,7 @@ Content-Type: application/json
 
 - Job in async mode (not only release) only return jid without block when job was created.
 - **EXEd** doesn't known the detail about release, it just pass them to the release plugin, for this request, means:
-  - There should be an release plugin with **__RHANDLER_TYPE__ = "common"**.
+  - There should be an release plugin with **\_\_RHANDLER_TYPE\_\_ = "common"**.
   - The **release** method of that plugin will invoked with **"release(revison, \*\*extra_opts)** as args.
   - When **rollback** is **true**, the **rollback** method of that plugin will invoked with **rollback(revision, \*\*extra_opts)**.
   - When **revision** is **?**, the **revision** method of that plugin will invoked with **revision(\*\*extra_opts)**
