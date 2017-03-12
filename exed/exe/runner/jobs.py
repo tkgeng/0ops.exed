@@ -127,7 +127,6 @@ class Job(object):
     def ctx(self):
         """ Dump job context for query request. """
         ctx = copy.deepcopy(self.dict_ctx)
-        ctx.pop('taskid', None)
         ctx.pop('mutex', None)
         ctx.pop('utag', None)
         ctx['operate'] = self.operate
