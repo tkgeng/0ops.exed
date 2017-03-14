@@ -4,3 +4,6 @@
 # ---> others
 *.swp
 *.DS_Store
+
+# ---> envs
+_run/*
