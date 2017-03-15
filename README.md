@@ -103,7 +103,7 @@ Endpoint | Usage | Supported method
 
 ## Errors
 
-- The Remote API uses standard HTTP status codes to indicate the success of failure of the API call. 
+- The Remote API uses standard HTTP status codes to indicate the success or failure of the API call.
 - The body of the response will be JSON in the following format:
 
     ```
@@ -196,16 +196,16 @@ Transfer-Encoding: chunked
     "return_data": {},
     "targets": [
         "molten-core.0ops.io", 
-        "karazhan.0ops.io",
+        "karazhan.0ops.io"
     ]
 
-    {"molten-core.0ops.io": {"state": 4, ...}}
-    {"karazhan.0ops.io": {"state": 4, ...}}
+    {"molten-core.0ops.io": {"state": 4, ...}}  (chunk)
+    {"karazhan.0ops.io": {"state": 4, ...}}     (chunk)
 }
 ```
 
 - The server will using chunked transfer encoding when query with **follow=1**.
-- The content of each chunk is depend on operate type of this job.
+- The content of each chunk is depend on operate type of that job.
 
 ##### Query parameters:
 - **outputs**: 1/True/true or 0/False/false, show return data of each operations. Only Job State was returned by default.
@@ -288,7 +288,8 @@ Content-Type: application/json
         "state": 0,
         "facter": {
             (...facter json...)
-        },
+        }
+    }
 }
 ```
 
@@ -394,7 +395,7 @@ Content-Type: application/json
 	"extra_vars": {
 		"upstreams": [
 			"127.0.0.1:8080",
-			"127.0.0.1:8081",
+			"127.0.0.1:8081"
 		],
 		"server_name": "exe.0ops.io"
 	}
@@ -514,7 +515,7 @@ Content-Type: application/json
 {
 	"targets": [
 		"molten-core.0ops.io",
-		"karazhan.0ops.io",
+		"karazhan.0ops.io"
 	],
     "appname": "zerops", 
     "apptype": "common", 
@@ -538,11 +539,11 @@ Content-Type: application/json
 ```
 
 - Every Job in async mode (including ping/facter/service/etc.) only return jid without block when job was created.
-- **EXEd** doesn't known the detail about release, it just pass them to the release plugin, for this request, means:
+- **EXEd** doesn't care about the detail of release, it just pass args to the release plugin, for this request, means:
   - There should be an release plugin with **\_\_RHANDLER_TYPE\_\_ = "common"** defined.
   - The **release** method of that plugin will invoked like this: **release(revison, \*\*extra_opts)**.
-  - When **rollback** is **true**, the **rollback** method of that plugin will invoked: **rollback(revision, \*\*extra_opts)**.
-  - When **revision** is **?**, the **revision** method of that plugin will invoked: **revision(\*\*extra_opts)**
+  - When **rollback** is **true**, the **rollback** method of that plugin will invoked like this: **rollback(revision, \*\*extra_opts)**.
+  - When **revision** is **?**, the **revision** method of that plugin will invoked like this: **revision(\*\*extra_opts)**
 
 ##### JSON parameters:
 - **targets (required)** - String array, remote hosts to release.
