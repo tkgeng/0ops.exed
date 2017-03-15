@@ -1,6 +1,6 @@
 # EXEd
 
-**EXEd** is an api service which provide remote execute (including code release) on top of **exector plugins (e.g.: ansible/salt plugin)**
+**EXEd** is an api service which provide remote execute (including code release) on top of **exector plugins (e.g.: ansible/salt plugin)**.
 
 # Consts/Enum
 Usage | Type | Value
@@ -44,7 +44,7 @@ log_level | log | log level of exe server | debug
 error_log | log | error log path | - (stdout)
 access_log | log | access log path | - (stdout)
 
-- these options under log section doesn't affect celery worker
+- these options under log section doesn't affect celery worker.
 
 # Executor Plugins Config
 Opts | Section | Usage | Default
@@ -54,8 +54,12 @@ inventory | ansible | ansible inventory file/dir | inventory
 playbooks | ansible | ansible playbooks dir | playbooks
 sshkey | ansible | path to ssh private key file | -
 
+- when use ansible executor plugin, there should be an init pb named "_deploy.yml".
+- the init pb should accept two vars: "_targets" and "_role".
+
 # Run it:
 ```shell
+$ pip install cherrypy six ansible "celery[librabbitmq,redis]"  # install packages
 $ bin/exed -c etc/exe.conf -d                                   # start the api server
 $ celery worker -A exe.runner -l info --exe-conf etc/exe.conf   # start the celery worker
 ```
@@ -157,7 +161,7 @@ Content-Type: application/json
 - Those are Job IDs (jid)
 
 ##### Query parameters:
-- **detail**: 1/True/true or 0/False/false, show job detail of each jobs. Only jids was returned by default.
+- **detail**: 1/True/true or 0/False/false, show job detail of each jobs. Only jid(s) was returned by default.
 
 ##### Status codes:
 - **200** - no error
@@ -200,8 +204,8 @@ Transfer-Encoding: chunked
 }
 ```
 
-- The content of each chunk is depend on operate type of this job.
 - The server will using chunked transfer encoding when query with **follow=1**.
+- The content of each chunk is depend on operate type of this job.
 
 ##### Query parameters:
 - **outputs**: 1/True/true or 0/False/false, show return data of each operations. Only Job State was returned by default.
@@ -253,7 +257,7 @@ Content-Type: application/json
 {"molten-core.0ops.io": {"status": 0}}
 ```
 
-status 0 -> ok with no changed (see ```Consts/Enum``` section for more details on operate state)
+status 0 -> ok with nothing changed (see ```Consts/Enum``` section for more details on operate state)
 
 ##### Query parameters:
 - **target (required)**: fqdn of remote host to ping.
@@ -288,7 +292,7 @@ Content-Type: application/json
 }
 ```
 
-again, state 0 means ok with no changed (see ```Consts/Enum``` section for more details on operate state)
+again, state 0 means ok with nothing changed (see ```Consts/Enum``` section for more details on operate state).
 
 ##### Query parameters:
 - **target (required)**: fqdn of remote host to gather facter from.
@@ -317,7 +321,7 @@ Content-Type: application/json
 {"molten-core.0ops.io": {"status": 4}}
 ```
 
-state 4 means ok with something changed (see ```Consts/Enum``` section for more details on operate state)
+state 4 means ok with something changed (see ```Consts/Enum``` section for more details on operate state).
 
 ##### Query parameters:
 - **target (required)**: fqdn of remote host to gather facter from.
@@ -356,7 +360,7 @@ Content-Type: application/json
 }
 ```
 
-state 4 means ok with something changed (see ```Consts/Enum``` section for more details on operate state)
+state 4 means ok with something changed (see ```Consts/Enum``` section for more details on operate state).
 
 ##### Query parameters:
 - **target (required)**: fqdn of remote host to gather facter from.
@@ -373,7 +377,7 @@ state 4 means ok with something changed (see ```Consts/Enum``` section for more 
 ### Deploy
 ``` POST /deploy ```
 
-Deploy service/role/app on remote host(s), only support async mode.
+Deploy service/role/app on remote host(s), only support async mode
 
 ##### Example request:
 ```
@@ -424,7 +428,7 @@ Content-Type: application/json
 ### Ping / Facter / Service / Execute
 ``` POST /ping | /facter | /service | /execute ```
 
-Do operate in non-block/async mode.
+Do operate in non-block/async mode
 
 ##### Example request:
 ```
@@ -500,7 +504,7 @@ Content-Type: application/json
 ### Release/Rollback/GatherRevision (Non-Block/Async Mode)
 ``` POST /release ```
 
-Release/Rollback/GatherRevision on remote host(s).
+Release/Rollback/GatherRevision on remote host(s)
 
 ##### Example request:
 ```
@@ -535,8 +539,8 @@ Content-Type: application/json
 
 - Every Job in async mode (including ping/facter/service/etc.) only return jid without block when job was created.
 - **EXEd** doesn't known the detail about release, it just pass them to the release plugin, for this request, means:
-  - There should be an release plugin with **\_\_RHANDLER_TYPE\_\_ = "common"**.
-  - The **release** method of that plugin will invoked: **release(revison, \*\*extra_opts)**.
+  - There should be an release plugin with **\_\_RHANDLER_TYPE\_\_ = "common"** defined.
+  - The **release** method of that plugin will invoked like this: **release(revison, \*\*extra_opts)**.
   - When **rollback** is **true**, the **rollback** method of that plugin will invoked: **rollback(revision, \*\*extra_opts)**.
   - When **revision** is **?**, the **revision** method of that plugin will invoked: **revision(\*\*extra_opts)**
 
