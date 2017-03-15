@@ -242,7 +242,7 @@ HTTP/1.1 204 No Content
 ### Ping (Block Mode)
 ``` GET /ping ```
 
-Ping remote host in block mode
+Ping remote host in block mode.
 
 ##### Example request:
 ```
@@ -257,7 +257,7 @@ Content-Type: application/json
 {"molten-core.0ops.io": {"status": 0}}
 ```
 
-status 0 -> ok with nothing changed (see ```Consts/Enum``` section for more details on operate state)
+status 0 -> ok with nothing changed (see ```Consts/Enum``` section for more details on operate state).
 
 ##### Query parameters:
 - **target (required)**: fqdn of remote host to ping.
@@ -271,7 +271,7 @@ status 0 -> ok with nothing changed (see ```Consts/Enum``` section for more deta
 ### Gather Facter Informations (Block Mode)
 ``` GET /facter ```
 
-Gather facter info of remote host in block mode
+Gather facter info of remote host in block mode.
 
 ##### Example request:
 ```
@@ -306,7 +306,7 @@ again, state 0 means ok with nothing changed (see ```Consts/Enum``` section for 
 ### Manipulate service (Block Mode)
 ``` GET /service ```
 
-Manipulate service on remote host in block mode
+Manipulate service on remote host in block mode.
 
 ##### Example request:
 ```
@@ -338,7 +338,7 @@ state 4 means ok with something changed (see ```Consts/Enum``` section for more 
 ### Execute RAW Command (Block Mode)
 ``` GET /execute ```
 
-Execute RAW Command on remote host in block mode
+Execute RAW Command on remote host in block mode.
 
 ##### Example request:
 ```
@@ -377,7 +377,7 @@ state 4 means ok with something changed (see ```Consts/Enum``` section for more 
 ### Deploy
 ``` POST /deploy ```
 
-Deploy service/role/app on remote host(s), only support async mode
+Deploy service/role/app on remote host(s), only support async mode.
 
 ##### Example request:
 ```
@@ -428,7 +428,7 @@ Content-Type: application/json
 ### Ping / Facter / Service / Execute
 ``` POST /ping | /facter | /service | /execute ```
 
-Do operate in non-block/async mode
+Do operate in non-block/async mode.
 
 ##### Example request:
 ```
@@ -470,7 +470,7 @@ Content-Type: application/json
 ### Release plugins info (Block/Sync Mode)
 ``` GET /release ```
 
-Gather release plugins info from server
+Gather release plugins info from server.
 
 ##### Example request:
 ```
@@ -504,7 +504,7 @@ Content-Type: application/json
 ### Release/Rollback/GatherRevision (Non-Block/Async Mode)
 ``` POST /release ```
 
-Release/Rollback/GatherRevision on remote host(s)
+Release/Rollback/GatherRevision on remote host(s).
 
 ##### Example request:
 ```
@@ -550,4 +550,3 @@ Content-Type: application/json
 - **apptype (required)** - String, type of release plugin to use.
 - **revision (required)** - String, the revision to release/rollback.
 - **extra_opts** - Object, extra options to the release/rollback/revision method of release plugin.
-
