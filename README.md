@@ -59,7 +59,7 @@ sshkey | ansible | path to ssh private key file | -
 
 # Run it:
 ```shell
-$ pip install cherrypy six ansible "celery[librabbitmq,redis]"  # install packages
+$ pip install cherrypy six ansible "celery[redis]"              # install packages
 $ bin/exed -c etc/exe.conf -d                                   # start the api server
 $ celery worker -A exe.runner -l info --exe-conf etc/exe.conf   # start the celery worker
 ```
