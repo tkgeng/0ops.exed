@@ -17,7 +17,6 @@ LOG = logging.getLogger(__name__)
 
 
 def exe_main():
-
     logger_bootstrap()
     
     try:
